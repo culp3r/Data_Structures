@@ -47,4 +47,47 @@ def __delitem__(self, index):
 ```
 
 ### The Hash Table
-Now, this data structure is useful for reducing runtime complexity. It has, on average, constant time searching, intertions, and deletions. However, in the worst case scenario, that is, when there is always a collision, the runtime for these operations would be O(n) rather than constant time.   
+Now, this data structure is useful for reducing runtime complexity. It has, on average, constant time searching, intertions, and deletions. However, in the worst case scenario, that is, when there is always a collision, the runtime for these operations would be O(n) rather than constant time. This data structure keeps track of (key, value) pairs. The values are searchable via a key. 
+
+
+#### Implementation:
+#### Uses:
+This is a lookup stucture and it can be said that it is best used as such. However, it does have an attractive runtime and it would be a shame not to leverage this structure to reduce the runtime of our programs when we can. For example, in finding the minimum number of swaps required to order a list consisting of consecutive values, the use of a hash table (of which, a python dictionary is) proves useful. In our first solution, 'slowMinSwaps', we search for the value that belongs in the current index we are looking at. This results in a higher runtime complexity. In our second solution, we use a dictionary to avoid that nested for loop. Instead, we can get the index of a desired value form the dictionary in constant time by simply looking it up: `dict[desiredVal]`.
+
+```python
+'''It's simple, for every item that is in the wrong spot, swap it with
+  the one that belongs in this current item's spot. NOTE: O(n^2)'''
+
+def slowMinSwaps(arr):
+    swaps = 0
+    for i in range(len(arr)):
+        # Check if the current number needs to be swapped
+        if i != arr[i]-1:
+            # Find value that should be where this current value is
+            for j in range(i+1, len(arr)):
+                if i == arr[j]-1:
+                    # swap them!
+                    arr[j], arr[i] = arr[i], arr[j]
+                    swaps += 1
+                    break
+    return swaps
+
+# MUST Optimize!
+# Use dict to map posititions with vals. This results in O(n^2) -> O(2n)
+def minimumSwaps(arr):
+    swaps = 0
+    dict = {}
+    # Populate dictionary with {value : index}
+    for i in range(len(arr)):
+        dict[arr[i]] = i
+    for i in range(len(arr)):
+        # Make sure the value need to be swapped first
+        if arr[i]-1 != i:
+            tmp = arr[i]
+            arr[i], arr[dict[i+1]] = arr[dict[i+1]], arr[i]
+            # Update dict after swapping
+            dict[tmp] = dict[i+1]
+            dict[i+1] = i
+            swaps += 1
+    return swaps
+```
