@@ -6,7 +6,7 @@ Here we'll be summarizing how the following DS work:
 - Stacks and Queues
 - AVL Trees (Balanced Binary Search Tree)
 
-### The Linked List
+## The Linked List
 This data structure is useful for manipulation. That is, it has constant time insertions and deletions (at the front or end). Comparable to an array which are better for random access O(1) and have better locality. However, manipulation of an array, that is, insertion or removal of an item, is expensive. Additionally, a linked list is useful for saving memory. In using an array, we must either know or estimate the size needed. This is how much is allocated to memory; whether or not it is used. Even worse, if we don't initially choose the appropriate size, both increasing or decreasing the size of an array is a costly operation. (A new one would need to be created with the new size, then the data from the old one copied over.) With a linked list that is not necessary, it uses up memory on an as-needed basis. The time complexities for the linked list are compared to that of an array.
 
 | Operation  | Linked List | Array |
@@ -47,7 +47,7 @@ def __delitem__(self, index):
   return None
 ```
 
-### The Hash Table
+## The Hash Table
 Now, this data structure is useful for reducing runtime complexity. It has, on average, constant time searching, intertions, and deletions. However, in the worst case scenario, that is, when there is always a collision, the runtime for these operations would be O(n) rather than constant time. This data structure keeps track of (key, value) pairs. The values are searchable via a key. We add the average time complexities for the hash table:
 
 | Operation  | Hash Table | Linked List | Array |
@@ -128,3 +128,13 @@ def minimumSwaps(arr):
             swaps += 1
     return swaps
 ```
+
+## Stacks and Queues
+Both of these data structures are very similar. The stack works just like you'd imagine; you add items to the top and only to the top. Similarly, you only remove items from the top. This is known as a first-in last-out. That is, the first item you add in will be at the bottom of the stack and can only be reached by removing all the items that are on top of it first. Conversely, a queue is first-in first-out. Like a wait line, the first person to get in is also the first person to get out. Both of these structures, at a high level use the same mechanism; add values in only one spot and remove values only from one spot. They, then, have the same runtime complexities. 
+
+| Operation  | Stacks & Queues | Hash Table | Linked List | Array |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Insertion | O(1) | O(1) | O(1) | O(n) |
+| Deletion | O(1) | O(1) | O(1) | O(n) |
+| Search | O(n) | O(1) | O(n) | O(n) |
+| Access | O(n) | N/A | O(n) | O(1) |
