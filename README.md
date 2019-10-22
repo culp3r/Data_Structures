@@ -4,6 +4,7 @@ Here we'll be summarizing how the following DS work:
 - Linked Lists
 - Hashtables
 - Stacks and Queues
+- Heaps
 - AVL Trees (Balanced Binary Search Tree)
 
 ## The Linked List
@@ -136,5 +137,22 @@ Both of these data structures are very similar. The stack works just like you'd 
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Insertion | O(1) | O(1) | O(1) | O(n) |
 | Deletion | O(1) | O(1) | O(1) | O(n) |
-| Search | O(n) | O(1) | O(n) | O(n) |
-| Access | O(n) | N/A | O(n) | O(1) |
+| Search | N/A | O(1) | O(n) | O(n) |
+| Access | N/A | N/A | O(n) | O(1) |
+
+#### Uses:
+The classic example for use of a stack: delimiter checks. For example, We can use a stack to verify an expression has proper use of delimiters, that is, every opening delimiter is paired with a closing delimiter. The below function does just that. Given an expression, `expr`, it returns true iff delimiters are correctly matched; otherwise, it returns false.
+```python
+delim_openers = '{([<'
+delim_closers = '})]>'
+def check_delimiters(expr):
+    s = Stack()
+    for c in expr:
+        if c in delim_openers:
+            s.push(delim_openers.index(c))
+        elif c in delim_closers:
+            if s.empty() or delim_closers.index(c) != s.pop():
+                return False
+    return s.empty()
+```
+
