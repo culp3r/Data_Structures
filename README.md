@@ -156,3 +156,29 @@ def check_delimiters(expr):
     return s.empty()
 ```
 
+## Heaps
+The heap structure is a tree structure that stores it data in an array. It is useful for maintaining a certain value, usually a min or max, readily accessible in constant time. It is important to keep in mind, just accessing this value is a constant time operation, but maintaining the heap property itself costs **O(log(n))** for each value added/removed. If instead of just checking the top value, `peek`, we wanted to `pop` it, that is, get the value and remove it from the heap it would be a **O(log(n))** operation. Initially building the heap has a runtime of **O(n)**.
+
+#### Heapsort
+Additionally, the properties of a heap can be leveraged to implement heapsort, a sorting algorithm with a runtime of **O(n log(n))**. Its implementation is simple; to sort a list in ascending order, simply add all the data of that list to a min heap and then pop all the values out into an empty list. 
+```python
+def heapsort(unsorted_list):
+    heap = Heap(lambda x: -x)
+    for val in unsorted_list:
+        heap.add(val)
+    sorted_list = []
+    while heap:
+        sorted_list.append(heap.pop())
+    return sorted_list
+```
+
+## AVL Trees:
+A balanced tree makes searching for values easy and quick O(log(n)). It maintains the ‘middle’ value at the top, lesser values on the left, and greater values on the right. 
+
+
+| Operation  | AVL Tree | Stacks & Queues | Hash Table | Linked List | Array |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Insertion | O(log(n)) | O(1) | O(1) | O(n) |
+| Deletion | O(log(n)) | O(1) | O(1) | O(n) |
+| Search | O(log(n)) | O(1) | O(n) | O(n) |
+| Access | O(log(n)) | N/A | O(n) | O(1) |
