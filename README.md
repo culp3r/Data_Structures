@@ -13,8 +13,9 @@ This data structure is useful for manipulation. That is, it has constant time in
 | ------------- | ------------- | ------------- |
 | Insertion | O(1) | O(n) |
 | Deletion | O(1) | O(n) |
-| Access | O(n) | O(1) |
 | Search | O(n) | O(n) |
+| Access | O(n) | O(1) |
+
 #### Implementation:
 To have constant time insertions and deletions for both prepend and append, we’ll use a doubly linked list with a persistent ‘sentinel’ node. This node can be known as the ‘head’ of the linked list since it keeps track of the beginning of the list. Additionally, since our list is doubly linked, this ‘sentinel’ node keeps track of the end of the list; creating a ‘circular’ typology. The benefits of this are constant time prepending and appending:
 
@@ -47,10 +48,46 @@ def __delitem__(self, index):
 ```
 
 ### The Hash Table
-Now, this data structure is useful for reducing runtime complexity. It has, on average, constant time searching, intertions, and deletions. However, in the worst case scenario, that is, when there is always a collision, the runtime for these operations would be O(n) rather than constant time. This data structure keeps track of (key, value) pairs. The values are searchable via a key. 
+Now, this data structure is useful for reducing runtime complexity. It has, on average, constant time searching, intertions, and deletions. However, in the worst case scenario, that is, when there is always a collision, the runtime for these operations would be O(n) rather than constant time. This data structure keeps track of (key, value) pairs. The values are searchable via a key. We add the average time complexities for the hash table:
 
+| Operation  | Hash Table | Linked List | Array |
+| ------------- | ------------- | ------------- | ------------- |
+| Insertion | O(1) | O(1) | O(n) |
+| Deletion | O(1) | O(1) | O(n) |
+| Search | O(1) | O(n) | O(n) |
+| Access | N/A | O(n) | O(1) |
 
 #### Implementation:
+For the constant time lookup, we use hash the key value to map it with a unique index. Keep in mind 'unique' is relative, due to the probability of a collision that depends on, both, the hash function used and the quantity of indexes we want to use. 
+
+```python
+def __setitem__(self, key, val):
+  # Store our entries in tuples
+  tmp = (key, val)
+  # Compute key's index & create a node
+  idx = hash(key) % len(self.indices)
+  new_node = OrderedHashtable.Node(len(self.entries))
+  # Check if there's no collision
+  if not self.indices[idx]:
+    self.indices[idx] = new_node
+    self.entries.append(tmp)
+  # If there is a collision, then we either update an existing value append to linked list
+  else:
+    current_node = self.indices[idx]
+    while current_node:
+      # If there's already an entry for this key we'll update its value
+      if self.entries[current_node.index][0] == key:
+        self.entries[current_node.index] = tmp
+        break
+      # If the key does not exist, then we'll append to linked list our new data
+      if not current_node.next:
+        current_node.next = new_node
+        self.entries.append(tmp)
+        break
+      current_node = current_node.next
+  self.count += 1
+  return
+```
 #### Uses:
 This is a lookup stucture and it can be said that it is best used as such. However, it does have an attractive runtime and it would be a shame not to leverage this structure to reduce the runtime of our programs when we can. For example, in finding the minimum number of swaps required to order a list consisting of consecutive values, the use of a hash table (of which, a python dictionary is) proves useful. In our first solution, 'slowMinSwaps', we search for the value that belongs in the current index we are looking at. This results in a higher runtime complexity. In our second solution, we use a dictionary to avoid that nested for loop. Instead, we can get the index of a desired value form the dictionary in constant time by simply looking it up: `dict[desiredVal]`.
 
