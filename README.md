@@ -173,8 +173,7 @@ def heapsort(unsorted_list):
 ```
 
 ## AVL Trees:
-A balanced tree makes searching for values easy and quick O(log(n)). It maintains the ‘middle’ value at the top, lesser values on the left, and greater values on the right. 
-
+This structure is a self-balancing binary search tree that makes searching for values easy and quick O(log(n)). This runtime remains for insertion and deletion. AVL Trees maintain the ‘middle’ value at the top, lesser values on the left, and greater values on the right and thus, by its nature, maintains order. It is made up of nodes that each hold a maximum of two child nodes and a value. To maintain balance, a parent node ensures that the heights of both its child nodes differ by no more than 1.
 
 | Operation  | AVL Tree | Stacks & Queues | Hash Table | Linked List | Array |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -182,3 +181,37 @@ A balanced tree makes searching for values easy and quick O(log(n)). It maintain
 | Deletion | O(log(n)) | O(1) | O(1) | O(n) |
 | Search | O(log(n)) | O(1) | O(n) | O(n) |
 | Access | O(log(n)) | N/A | O(n) | O(1) |
+
+#### Implementation:
+Naturally, we use binary search for searching. Take the implementation of the `__contains__` function.
+```python
+def __contains__(self, val):
+  def find(node):
+    if not node:
+      return False
+    elif val < node.val:
+      return find(node.left)
+    elif val > node.val:
+      return find(node.right)
+    else:
+      return True
+    return find(self.root)
+```
+
+In implementing addition of data, we make a helper function that traverses to where the value we wish to add is supposed to go. Once there, it returns a node containing that value which gets added to the correct parent nodes recursively on the way back out. 
+```python
+def add(self, val):
+  def add_val(t):
+    if not t:
+      return AVLTree.Node(val)
+    elif val > t.val:
+      t.right = add_val(t.right)
+    elif val < t.val:
+      t.left = add_val(t.left)
+    # Rebalance the tree when necessary
+    if abs(AVLTree.Node.height(t.left) - AVLTree.Node.height(t.right)) > 1:
+      AVLTree.rebalance(t)
+    return t
+  assert(val not in self)
+  self.root = add_val(self.root)
+```
