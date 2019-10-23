@@ -178,10 +178,10 @@ This structure is a self-balancing binary search tree that makes searching for v
 
 | Operation  | AVL Tree | Stacks & Queues | Hash Table | Linked List | Array |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Insertion | O(log(n)) | O(1) | O(1) | O(n) |
-| Deletion | O(log(n)) | O(1) | O(1) | O(n) |
-| Search | O(log(n)) | O(1) | O(n) | O(n) |
-| Access | O(log(n)) | N/A | O(n) | O(1) |
+| Insertion | O(log(n)) | O(1) | O(1) | O(1) | O(n) |
+| Deletion | O(log(n)) | O(1) | O(1) | O(1) | O(n) |
+| Search | O(log(n)) | N/A | O(1) | O(n) | O(n) |
+| Access | O(log(n)) |  N/A | N/A | O(n) | O(1) |
 
 #### Implementation:
 To maintain balance, a parent node ensures that the heights of both its child nodes differ by no more than 1. To do this, we simply check for any of the four imbalances possible; both the left imbalances and both the right imbalances. Then simply perform the appropriate rotations.
