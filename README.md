@@ -157,7 +157,8 @@ def check_delimiters(expr):
 ```
 
 ## Heaps
-The heap structure is a tree structure that stores it data in an array. It is useful for maintaining a certain value, usually a min or max, readily accessible in constant time. It is important to keep in mind, just accessing this value is a constant time operation, but maintaining the heap property itself costs **O(log(n))** for each value added/removed. If instead of just checking the top value, `peek`, we wanted to `pop` it, that is, get the value and remove it from the heap it would be a **O(log(n))** operation. Initially building the heap has a runtime of **O(n)**.
+The heap structure is a tree structure that stores its data in an array. It is useful for maintaining a certain value, usually a min or max, readily accessible in constant time. It is important to keep in mind, that just accessing this top value, `peek`ing, is a constant time operation. However, the runtime of `pop`ing the value, that is, getting it and removing it from the top of the heap, is a **O(log(n))** operation. This is because maintaining the heap property itself is a **O(log(n))** operation for each value that is added or removed. Initially building the heap has a runtime of **O(n)**.
+
 
 #### Heapsort
 Additionally, the properties of a heap can be leveraged to implement heapsort, a sorting algorithm with a runtime of **O(n log(n))**. Its implementation is simple; to sort a list in ascending order, simply add all the data of that list to a min heap and then pop all the values out into an empty list. 
