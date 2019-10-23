@@ -173,7 +173,7 @@ def heapsort(unsorted_list):
 ```
 
 ## AVL Trees:
-This structure is a self-balancing binary search tree that makes searching for values easy and quick O(log(n)). This runtime remains for insertion and deletion. AVL Trees maintain the ‘middle’ value at the top, lesser values on the left, and greater values on the right and thus, by its nature, maintains order. It is made up of nodes that each hold a maximum of two child nodes and a value. To maintain balance, a parent node ensures that the heights of both its child nodes differ by no more than 1.
+This structure is a self-balancing binary search tree that makes searching for values easy and quick O(log(n)). This runtime remains for insertion and deletion. AVL Trees maintain the ‘middle’ value at the top, lesser values on the left, and greater values on the right and thus, by its nature, maintains order. It is made up of nodes that each hold a maximum of two child nodes and a value. The runtimes for this structure are consistent:
 
 | Operation  | AVL Tree | Stacks & Queues | Hash Table | Linked List | Array |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -183,6 +183,48 @@ This structure is a self-balancing binary search tree that makes searching for v
 | Access | O(log(n)) | N/A | O(n) | O(1) |
 
 #### Implementation:
+To maintain balance, a parent node ensures that the heights of both its child nodes differ by no more than 1. To do this, we simply check for any of the four imbalances possible; both the left imbalances and both the right imbalances. Then simply perform the appropriate rotations.
+
+```python
+def rebalance(t):
+  # Left imbalance
+  if AVLTree.Node.height(t.left) > AVLTree.Node.height(t.right):
+    if AVLTree.Node.height(t.left.left) >= AVLTree.Node.height(t.left.right):
+      # left-left imbalance
+      t.rotate_right()
+    else:
+      # left-right imbalance
+      t.left.rotate_left()
+      t.rotate_right()
+  # Right imbalance
+  else:
+    if AVLTree.Node.height(t.right.right) >= AVLTree.Node.height(t.right.left):
+      # right-right imbalance
+      t.rotate_left()
+    else:
+      # right-left imbalance
+      t.right.rotate_right()
+      t.rotate_left()
+```
+
+The implementations of the `rotate_left` and `rotate_right` are simply value swapping. For example, the image below is a left rotation.
+
+![Left Swap](https://github.com/culp3r/Data_Structures/blob/master/data/left_swap.png)
+
+In the case of this left rotation, the node with the number 4 is our node and the node with the value 5 is `n`. First, the values of our node and `n` are swapped. Then, we change the references to child nodes such that `n` becomes our left child and the node containing 6 becomes our right child. This is shown in the code below:
+```python
+class Node:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+    def rotate_left(self):
+      n = self.right
+      self.val, n.val = n.val, self.val
+      self.right, n.right, self.left, n.left = n.right, n.left, n, self.left
+```
+
 Naturally, we use binary search for searching. Take the implementation of the `__contains__` function.
 ```python
 def __contains__(self, val):
